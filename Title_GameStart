@@ -1,0 +1,23 @@
+using UnityEngine;
+using System.Collections;
+
+public class Title_GameStart : MonoBehaviour {
+  
+	public GUISkin mySkin;
+
+	// Use this for initialization
+	void OnGUI(){
+		GUI.skin = mySkin;
+		if(GUI.Button(new Rect(200,100,100,50),"Play Game")){
+			print ("You clicked me");
+		}
+	}
+	void Start () {
+	
+	}
+	
+	// Update is called once per frame
+	void Update () {
+	
+	}
+}
