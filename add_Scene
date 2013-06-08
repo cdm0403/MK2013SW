@@ -1,0 +1,22 @@
+using UnityEngine;
+using System.Collections;
+
+public class Game1_Scene : MonoBehaviour {
+  void OnGUI(){
+		float btnW = 200;
+		float btnH  = 100;
+		if(GUI.Button(new Rect(Screen.width/2-btnW/2,Screen.height/2-btnH/2,btnW,btnH),"Start")){
+		print("test");
+	}
+}
+
+	// Use this for initialization
+	void Start () {
+	
+	}
+	
+	// Update is called once per frame
+	void Update () {
+	
+	}
+}
