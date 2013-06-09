@@ -1,61 +1,42 @@
 using UnityEngine;
 using System.Collections;
 
-public class InputMouse : MonoBehaviour {
+public class Balloon : MonoBehaviour {
   
 	public GameObject m_Balloon;
-	public GUIText gui_text1;
-	public static int Score = 0;
-	private float done = 30.0F;
-	public GUIText gui_text;
+	public bool Bigger; // true일때 계속 커지하는 bool 값.
+	//public int Score = 0;
+	public bool Moving; // true일때 움직이게 하는 bool 값.
+	//public GUIText gui_textscore;
+	int r; //방향 랜덤.
 
 	// Use this for initialization
 	void Start () {
-		
-	
+		Bigger = true; 
+		Moving = false;
+
+		r = Random.Range(0,4);
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-		
-		if(Input.GetMouseButtonDown(0)) {
-			
-			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			RaycastHit hit;			
-			if (Physics.Raycast(ray, out hit)) { // 위 3줄은 ray를 쏘는 공식.
-				if(hit.transform.tag == "plane") { // plane일 경우 생성(plane의 렌더러는 꺼놔서 안보임).
-					Instantiate(m_Balloon, hit.point, m_Balloon.transform.rotation);
-				} 
-				
-				if(hit.transform.tag == "balloon") { // 풍선을 클릭하면 멈추게 함.
-					hit.transform.GetComponent<Balloon>().Bigger = false;
-					if(hit.transform.localScale.x < 50) { //풍선이 30보다 작으면 제거.
-						Score = Score - 50;
-						Destroy(hit.transform.gameObject);
-					}
-					else if(hit.transform.localScale.x > 70){
-						Score = Score - 50;
-						Destroy(hit.transform.gameObject);
-					}	
-					else if(hit.transform.localScale.x >=50 && hit.transform.localScale.x <= 70){
-						Score = Score + 100;
-						hit.transform.collider.enabled = false;
-						hit.transform.GetComponent<Balloon>().Moving = true; // 성공하면 풍선이 움직이게 함.
-					}
-				}
-			}
+
+		if(Bigger) {
+
+			transform.localScale = new Vector3(transform.localScale.x + 2.0f, 
+				transform.localScale.y + 2.0f, transform.localScale.z + 2.0f); // Scale 0.1씩 커지게 함.
 		}
-		
-		gui_text1.text = "Score : "+ Score;
-		
-		if(done>0F){
-			done-=Time.deltaTime;
-			gui_text.text = "Time : "+ done.ToString("##.##") +" sec";
-			
-	 	}
-		else{
-		   	gui_text.text = "Time Over"; 
-	   	}
-		
-	}	
+
+		if(Moving) {			
+			if(r==0) transform.Translate(0.5f,0,0);
+			else if(r==1) transform.Translate(-0.5f,0,0);
+			else if(r==2) transform.Translate(0,0.5f,0);
+			else if(r==3)  transform.Translate(0,-0.5f,0);
+		}
+		if(transform.localScale.x>80){
+			InputMouse.Score-=50;
+			Destroy(transform.gameObject);
+		}
+
+	}
 }
