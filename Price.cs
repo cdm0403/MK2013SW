@@ -113,7 +113,7 @@ public class mainScript : MonoBehaviour {
 			int objectNum = 3;
 			
 			while(count<objectNum){
-				int index = Random.Range(0,8);
+				int index = Random.Range(0,5);
 				bool isValid = true;
 				for(int i=0;i<count;i++){
 					if(objectNumber[i] == index){
@@ -133,17 +133,17 @@ public class mainScript : MonoBehaviour {
 			int[] priceArray = new int[3];
 			count = 0;
 			while(count < objectNum){
-				int index = Random.Range(1,5);
+				int index = Random.Range(3,5);
 				bool isValid = true;
 				for(int i=0;i<count;i++){
-					if(priceArray[i] == index*100){
+					if(priceArray[i] == index*10){
 						isValid = false;
 						break;
 					}
 				}
 				if(isValid){
-					priceArray[count] = index*100;
-					GameObject.Find(nameForNumber[objectNumber[count]]).GetComponent<ItemScript>().price = index*100;	
+					priceArray[count] = index*10;
+					GameObject.Find(nameForNumber[objectNumber[count]]).GetComponent<ItemScript>().price = index*10;	
 					count++;
 				}
 			}
@@ -190,23 +190,23 @@ public class mainScript : MonoBehaviour {
 				int index = Random.Range(2,6);
 				bool isValid = true;
 				for(int i=0;i<count;i++){
-					if(priceArray[i] == index*500){
+					if(priceArray[i] == index*50){
 						isValid = false;
 						break;
 					}
 				}
 				if(isValid){
-					priceArray[count] = index*500;
-					GameObject.Find(nameForNumber[objectNumber[count]]).GetComponent<ItemScript>().price = index*500;	
+					priceArray[count] = index*50;
+					GameObject.Find(nameForNumber[objectNumber[count]]).GetComponent<ItemScript>().price = index*50;	
 					count++;
 				}
 			}
 			/////////////////////////////////////
 			/////////// 총 가격 랜덤 /////////////
-			int step1 = Random.Range(0,3);
+			int step1 = Random.Range(0,5);
 			int step2 = step1;
 			while(step2==step1){
-				step2 = Random.Range(0,3);	
+				step2 = Random.Range(0,5);	
 			}
 			totalPrice = priceArray[step1]+priceArray[step2];
 			GameObject.Find("TotalPrice_Back").transform.FindChild("TotalPrice").gameObject.GetComponent<TotalPriceScript>().price = totalPrice;
