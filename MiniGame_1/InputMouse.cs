@@ -6,21 +6,21 @@ public class InputMouse : MonoBehaviour {
 	public GameObject m_Balloon;
 	public GameObject[] m_Success;
 	public static int Score = 0;
-	private float done = 30.0F;
+	private float done = 20.0F;
 	public static int Success = 0;
-	
+	public int State=0;
 	public GUIText gui_text;
 	public GUIText gui_text1;
 	public GUIText T_Success;
+	public GUITexture T_Start;
 	int j=1;
-	
+
 	// Use this for initialization
 	void Start () {
 		for(int i=1;i<26;i++){
 			string ii = i.ToString();
 			m_Success[i] = GameObject.Find("Sphere"+ii);
 		}
-	
 	}
 	
 	// Update is called once per frame
@@ -29,8 +29,12 @@ public class InputMouse : MonoBehaviour {
 		if(Input.GetMouseButtonDown(0)) {
 			
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-			RaycastHit hit;			
+			RaycastHit hit;
 			if (Physics.Raycast(ray, out hit)) { // 위 3줄은 ray를 쏘는 공식.
+				if(hit.transform.tag == "Start_BT"){
+				State=1;
+				Destroy(hit.transform.gameObject);
+				}
 				if(hit.transform.tag == "plane") { // plane일 경우 생성(plane의 렌더러는 꺼놔서 안보임).
 					Instantiate(m_Balloon, hit.point, m_Balloon.transform.rotation);
 				} 
@@ -59,15 +63,15 @@ public class InputMouse : MonoBehaviour {
 		
 		gui_text1.text = "Score : "+ Score;
 		T_Success.text = "Success : " + Success;
-		
-		if(done>0F){
+		if(State==1){
+			if(done>0F){
 			done-=Time.deltaTime;
 			gui_text.text = "Time : "+ done.ToString("##.##") +" sec";
-			
-	 	}
-		else{
+	 		}
+			else{
 		   	gui_text.text = "Time Over"; 
-	   	}
-		
-	}	
+	   		}
+		}
+	}
+	
 }
