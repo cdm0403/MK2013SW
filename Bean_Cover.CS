@@ -17,12 +17,14 @@ public class Bean_Cover : MonoBehaviour {
 	public static int Success = 0;
 	public GUIText gui_text;
 	public GUIText gui_text1;
+	public GUITexture m_Main;
 
 	// Use this for initialization
 
 
 	void Start () {
 		state=0;
+		Score = 0;
 	}
 
 
@@ -63,7 +65,13 @@ public class Bean_Cover : MonoBehaviour {
 					if(R2==1){
 					Instantiate(m_Bean2, hit.point, m_Bean2.transform.rotation);
 					}
-
+					/*
+					Instantiate(m_Bean, hit.point, m_Bean.transform.rotation);
+					hit.transform.collider.enabled = false;
+					hit.transform.GetComponent<Bean>().Moving=true;
+					//Rigidbody body=go.GetComponent<Rigidbody>();
+					//body.AddForce( transform.right * 5f);
+					*/
 					StartCoroutine(Cover());
 					renderer.enabled = false;
 					gameObject.tag="Untagged";
@@ -85,11 +93,41 @@ public class Bean_Cover : MonoBehaviour {
 		}
 		*/
 		
-}
+		///메인으로 가는 스크립트/// 
+		if( Application.isEditor ) // PC
+		{
+			if( Input.GetMouseButtonDown(0) ) {
+				if(true == m_Main.HitTest( new Vector2( Input.mousePosition.x, Input.mousePosition.y) ) ) {
+					Home();
+				}
+			}
+		}
+		else { // Mobile
+			if( Input.touchCount > 0 )
+			{
+				Touch touch = Input.GetTouch(0);
+				if (touch.phase == TouchPhase.Began)
+				{
+					if( m_Main.HitTest( touch.position )) {
+						Home();
+					}
+					
+				}
+			}
+		}
+		///메인으로 가는 스크립트 -끝- /// 
+	}
+	
 	 IEnumerator Cover(){
         yield return new WaitForSeconds(1f);
 		Debug.Log("stop");
 		renderer.enabled = true;
 		gameObject.tag="Bean_Cover";	
     }
+	
+	void Home()
+	{
+		Debug.Log("aa");
+		 Application.LoadLevel("main");
+	}
 }
