@@ -14,7 +14,6 @@ public class Balloon : MonoBehaviour {
 	void Start () {
 		Bigger = true; 
 		Moving = false;
-		
 		//r = Random.Range(0,4);
 	}
 	
@@ -22,9 +21,8 @@ public class Balloon : MonoBehaviour {
 	void Update () {
 		
 		if(Bigger) {
-			
-			transform.localScale = new Vector3(transform.localScale.x + 2.5f, 
-				transform.localScale.y + 2.5f, transform.localScale.z + 2.5f); // Scale 0.1씩 커지게 함.
+			transform.localScale = new Vector3(transform.localScale.x + 1.5f, 
+				transform.localScale.y + 1.5f, transform.localScale.z + 1.5f); // Scale 0.1씩 커지게 함.
 		}
 		
 		if(Moving) {			
@@ -33,7 +31,7 @@ public class Balloon : MonoBehaviour {
 			//else if(r==2) transform.Translate(0,0.6f,0);
 			//else if(r==3)  transform.Translate(0,-0.6f,0);
 		}
-		if(transform.localScale.x>70){
+		if(transform.localScale.x>80){
 			InputMouse.Score-=50;
 			Destroy(transform.gameObject);
 		}
