@@ -16,8 +16,6 @@ public class Button_Manager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	if( Application.isEditor ) // PC
-		{
 			if( Input.GetMouseButtonDown(0) ) {
 				if(true == m_Bean.HitTest( new Vector2( Input.mousePosition.x, Input.mousePosition.y) ) ) {
 					Bean();
@@ -32,32 +30,6 @@ public class Button_Manager : MonoBehaviour {
 					Exit();
 				}
 			}
-		}
-
-
-		else { // Mobile
-			if( Input.touchCount > 0 )
-			{
-				Touch touch = Input.GetTouch(0);
-				if (touch.phase == TouchPhase.Began)
-				{
-					if( m_Bean.HitTest( touch.position )) {
-						Bean();
-					}
-					if( m_Bubble.HitTest( touch.position )) {
-						
-						Game();
-					}
-					if( m_Game.HitTest( touch.position )) {
-						MainGame();
-					}
-					if( m_Bubble.HitTest( touch.position )) {
-						Exit();
-					}
-					
-				}
-			}
-		}
 	}
 	void MainGame()
 	{
