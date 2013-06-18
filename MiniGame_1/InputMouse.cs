@@ -15,6 +15,9 @@ public class InputMouse : MonoBehaviour {
 	public GUIText T_Success;
 	public GUITexture m_Main;
 	
+	public AudioClip m_fail;
+	public AudioClip m_successs;
+	
 	//public GUITexture T_Start;
 	int j=1;
 
@@ -35,6 +38,9 @@ public class InputMouse : MonoBehaviour {
 			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 			RaycastHit hit;
 			if (Physics.Raycast(ray, out hit)) { // 위 3줄은 ray를 쏘는 공식.
+				if(true == m_Main.HitTest( new Vector2( Input.mousePosition.x, Input.mousePosition.y) ) ) {
+					Home();
+				}
 				if(hit.transform.tag == "Start_BT"){
 					State=1;
 					Destroy(hit.transform.gameObject);
@@ -50,13 +56,16 @@ public class InputMouse : MonoBehaviour {
 					hit.transform.GetComponent<Balloon>().Bigger = false;
 					if(hit.transform.localScale.x < 60) { //풍선이 60보다 작으면 제거.
 						Score = Score - 50;
+						AudioSource.PlayClipAtPoint(m_fail,transform.position);
 						Destroy(hit.transform.gameObject);
 					}
 					else if(hit.transform.localScale.x > 80){
+						AudioSource.PlayClipAtPoint(m_fail,transform.position);
 						Score = Score - 50;
 						Destroy(hit.transform.gameObject);
 					}	
 					else if(hit.transform.localScale.x >=60 && hit.transform.localScale.x <= 80){
+						AudioSource.PlayClipAtPoint(m_successs,transform.position);
 						Score = Score + 100;
 						Success++;
 						m_Success[j].renderer.enabled = true;
@@ -68,29 +77,6 @@ public class InputMouse : MonoBehaviour {
 			}
 			
 			
-		///메인으로 가는 스크립트/// 
-		if( Application.isEditor ) // PC
-		{
-			if( Input.GetMouseButtonDown(0) ) {
-				if(true == m_Main.HitTest( new Vector2( Input.mousePosition.x, Input.mousePosition.y) ) ) {
-					Home();
-				}
-			}
-		}
-		else { // Mobile
-			if( Input.touchCount > 0 )
-			{
-				Touch touch = Input.GetTouch(0);
-				if (touch.phase == TouchPhase.Began)
-				{
-					if( m_Main.HitTest( touch.position )) {
-						Home();
-					}
-					
-				}
-			}
-		}
-		///메인으로 가는 스크립트 -끝- /// 
 		
 		}
 		
