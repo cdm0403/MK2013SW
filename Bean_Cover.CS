@@ -18,7 +18,9 @@ public class Bean_Cover : MonoBehaviour {
 	public GUIText gui_text;
 	public GUIText gui_text1;
 	public GUITexture m_Main;
-
+	
+	public AudioClip m_pung;
+	
 	// Use this for initialization
 
 
@@ -58,6 +60,7 @@ public class Bean_Cover : MonoBehaviour {
 					Destroy(hit.transform.gameObject);
 				}
 				if(hit.transform.tag == "Bean_Cover") {
+					AudioSource.PlayClipAtPoint(m_pung,transform.position);
 					RandomX = Random.Range(0,90);
 					if(R2==0){
 					Instantiate(m_Bean1, hit.point, m_Bean1.transform.rotation);
@@ -94,15 +97,12 @@ public class Bean_Cover : MonoBehaviour {
 		*/
 		
 		///메인으로 가는 스크립트/// 
-		if( Application.isEditor ) // PC
-		{
+
 			if( Input.GetMouseButtonDown(0) ) {
 				if(true == m_Main.HitTest( new Vector2( Input.mousePosition.x, Input.mousePosition.y) ) ) {
 					Home();
 				}
 			}
-		}
-		else { // Mobile
 			if( Input.touchCount > 0 )
 			{
 				Touch touch = Input.GetTouch(0);
@@ -114,7 +114,6 @@ public class Bean_Cover : MonoBehaviour {
 					
 				}
 			}
-		}
 		///메인으로 가는 스크립트 -끝- /// 
 	}
 	
